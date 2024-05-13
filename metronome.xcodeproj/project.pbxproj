@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6029EFBB2BC57B34006EF445 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6029EFBA2BC57B34006EF445 /* Model.swift */; };
+		6054BE742BE297D20062FD33 /* SoundSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054BE732BE297D20062FD33 /* SoundSelector.swift */; };
+		6054BE762BE29E5C0062FD33 /* Beat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054BE752BE29E5C0062FD33 /* Beat.swift */; };
+		6054BE782BE29F500062FD33 /* BeatDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054BE772BE29F500062FD33 /* BeatDisplay.swift */; };
+		6054BE7A2BE2A5FD0062FD33 /* TempoSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054BE792BE2A5FD0062FD33 /* TempoSelector.swift */; };
 		6058ED5B2BB1D70A00E31B41 /* metronomeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058ED5A2BB1D70A00E31B41 /* metronomeApp.swift */; };
 		6058ED5D2BB1D70A00E31B41 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058ED5C2BB1D70A00E31B41 /* ContentView.swift */; };
 		6058ED5F2BB1D70B00E31B41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6058ED5E2BB1D70B00E31B41 /* Assets.xcassets */; };
@@ -15,7 +18,8 @@
 		6058ED6C2BB1D70B00E31B41 /* metronomeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058ED6B2BB1D70B00E31B41 /* metronomeTests.swift */; };
 		6058ED762BB1D70B00E31B41 /* metronomeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058ED752BB1D70B00E31B41 /* metronomeUITests.swift */; };
 		6058ED782BB1D70B00E31B41 /* metronomeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058ED772BB1D70B00E31B41 /* metronomeUITestsLaunchTests.swift */; };
-		60A318262BCEBAAB0074F301 /* SliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A318252BCEBAAB0074F301 /* SliderStyle.swift */; };
+		60615D082BE3C23100710602 /* TapToMeasureBPMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60615D072BE3C23100710602 /* TapToMeasureBPMButton.swift */; };
+		60B528242BE8B5540021A8F9 /* TempoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B528232BE8B5540021A8F9 /* TempoLabel.swift */; };
 		60DDB50C2BC3DE410050DA3E /* Subdivisions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDB50B2BC3DE410050DA3E /* Subdivisions.swift */; };
 		60DDB50E2BC3DEF50050DA3E /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 60DDB50D2BC3DEF50050DA3E /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
@@ -38,7 +42,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6029EFBA2BC57B34006EF445 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		6054BE732BE297D20062FD33 /* SoundSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSelector.swift; sourceTree = "<group>"; };
+		6054BE752BE29E5C0062FD33 /* Beat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beat.swift; sourceTree = "<group>"; };
+		6054BE772BE29F500062FD33 /* BeatDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatDisplay.swift; sourceTree = "<group>"; };
+		6054BE792BE2A5FD0062FD33 /* TempoSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoSelector.swift; sourceTree = "<group>"; };
 		6058ED572BB1D70A00E31B41 /* metronome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = metronome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6058ED5A2BB1D70A00E31B41 /* metronomeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = metronomeApp.swift; sourceTree = "<group>"; };
 		6058ED5C2BB1D70A00E31B41 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -49,7 +56,8 @@
 		6058ED712BB1D70B00E31B41 /* metronomeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = metronomeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6058ED752BB1D70B00E31B41 /* metronomeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = metronomeUITests.swift; sourceTree = "<group>"; };
 		6058ED772BB1D70B00E31B41 /* metronomeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = metronomeUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		60A318252BCEBAAB0074F301 /* SliderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderStyle.swift; sourceTree = "<group>"; };
+		60615D072BE3C23100710602 /* TapToMeasureBPMButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapToMeasureBPMButton.swift; sourceTree = "<group>"; };
+		60B528232BE8B5540021A8F9 /* TempoLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoLabel.swift; sourceTree = "<group>"; };
 		60DDB50B2BC3DE410050DA3E /* Subdivisions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subdivisions.swift; sourceTree = "<group>"; };
 		60DDB50D2BC3DEF50050DA3E /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,8 +116,12 @@
 				6058ED5E2BB1D70B00E31B41 /* Assets.xcassets */,
 				6058ED602BB1D70B00E31B41 /* Preview Content */,
 				60DDB50D2BC3DEF50050DA3E /* Localizable.xcstrings */,
-				6029EFBA2BC57B34006EF445 /* Model.swift */,
-				60A318252BCEBAAB0074F301 /* SliderStyle.swift */,
+				6054BE732BE297D20062FD33 /* SoundSelector.swift */,
+				6054BE752BE29E5C0062FD33 /* Beat.swift */,
+				6054BE772BE29F500062FD33 /* BeatDisplay.swift */,
+				6054BE792BE2A5FD0062FD33 /* TempoSelector.swift */,
+				60615D072BE3C23100710602 /* TapToMeasureBPMButton.swift */,
+				60B528232BE8B5540021A8F9 /* TempoLabel.swift */,
 			);
 			path = metronome;
 			sourceTree = "<group>";
@@ -225,6 +237,7 @@
 			knownRegions = (
 				en,
 				Base,
+				cs,
 			);
 			mainGroup = 6058ED4E2BB1D70A00E31B41;
 			productRefGroup = 6058ED582BB1D70A00E31B41 /* Products */;
@@ -271,10 +284,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				60DDB50C2BC3DE410050DA3E /* Subdivisions.swift in Sources */,
+				6054BE7A2BE2A5FD0062FD33 /* TempoSelector.swift in Sources */,
 				6058ED5D2BB1D70A00E31B41 /* ContentView.swift in Sources */,
+				6054BE742BE297D20062FD33 /* SoundSelector.swift in Sources */,
 				6058ED5B2BB1D70A00E31B41 /* metronomeApp.swift in Sources */,
-				60A318262BCEBAAB0074F301 /* SliderStyle.swift in Sources */,
-				6029EFBB2BC57B34006EF445 /* Model.swift in Sources */,
+				6054BE762BE29E5C0062FD33 /* Beat.swift in Sources */,
+				60615D082BE3C23100710602 /* TapToMeasureBPMButton.swift in Sources */,
+				6054BE782BE29F500062FD33 /* BeatDisplay.swift in Sources */,
+				60B528242BE8B5540021A8F9 /* TempoLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +458,7 @@
 				DEVELOPMENT_TEAM = ZQBR62PZJ6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -450,7 +468,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = juhy.metronome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -470,6 +488,7 @@
 				DEVELOPMENT_TEAM = ZQBR62PZJ6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -479,7 +498,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = juhy.metronome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -1,51 +1,30 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "2" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "2"
-          }
-        }
-      }
-    },
-    "3" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "3"
-          }
-        }
-      }
-    },
-    "4" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "4"
-          }
-        }
-      }
-    },
-    "5" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "5"
-          }
-        }
-      }
-    },
-    "6" : {
+    "%@" : {
 
+    },
+    "%lld" : {
+
+    },
+    "%lld:%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld:%2$lld"
+          }
+        }
+      }
     },
     "add" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přidat"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -54,39 +33,41 @@
         }
       }
     },
-    "add " : {
+    "play" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spustit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play"
+          }
+        }
+      }
+    },
+    "Play" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add"
-          }
-        }
-      }
-    },
-    "beats" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beats"
-          }
-        }
-      }
-    },
-    "name" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Metronome 0.1"
+            "value" : "Play"
           }
         }
       }
     },
     "remove" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odebrat"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -95,8 +76,25 @@
         }
       }
     },
-    "sound-beep" : {
+    "Select tempo" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyberte tempo"
+          }
+        }
+      }
+    },
+    "sound-beep" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Píp"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -105,8 +103,32 @@
         }
       }
     },
-    "sound-drums" : {
+    "sound-classic" : {
+      "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metronom"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Classic"
+          }
+        }
+      }
+    },
+    "sound-drums" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bicí"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -115,18 +137,15 @@
         }
       }
     },
-    "sound-metronome" : {
+    "sound-sticks" : {
+      "extractionState" : "manual",
       "localizations" : {
-        "en" : {
+        "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Metronome"
+            "value" : "Paličky"
           }
-        }
-      }
-    },
-    "sound-sticks" : {
-      "localizations" : {
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -135,9 +154,42 @@
         }
       }
     },
+    "stop" : {
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zastavit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
+          }
+        }
+      }
+    },
+    "Stop" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
+          }
+        }
+      }
+    },
     "subdivisions" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dělení"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -146,22 +198,34 @@
         }
       }
     },
-    "Tap" : {
+    "SUBDIVS" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dělení"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tap"
+            "value" : "Subdivs"
           }
         }
       }
     },
-    "Tempo" : {
+    "Tap tempo" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap tempo"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tempo"
+            "value" : "Tap tempo"
           }
         }
       }
