@@ -9,11 +9,12 @@ import SwiftUI
 import AVFoundation
 import CoreMotion
 
-enum BeatValue: String {
+enum BeatValue: String, CaseIterable, Hashable {
     case high = "HIGH"
     case medium = "MEDIUM"
     case low = "LOW"
     case none = "NONE"
+    case subdivision = "SUBDIVISION"
 }
 
 struct AppSettings {
@@ -27,7 +28,7 @@ struct AppSettings {
     struct Defaults {
         static let sound: String = "sticks"
         static let tempo: Int = 120
-        static let beats: [BeatValue] = [BeatValue.high, BeatValue.low, BeatValue.low, BeatValue.low]
+        static let beats: [BeatValue] = [BeatValue.high, BeatValue.low, BeatValue.medium, BeatValue.low]
     }
 }
 
@@ -36,10 +37,10 @@ struct ContentView: View {
     @State private var activeSubdivision:  Int = 1
     @State private var activeBeat: Int = 0
     @State private var activeSubBeat:  Int = 0
-
+    
     @State private var tempo: Int =  AppSettings.Defaults.tempo
     @State private var isPlaying: Bool = false
-
+    
     @State private var selectedSound: String = AppSettings.Defaults.sound
     @State private var beats: [BeatValue] = AppSettings.Defaults.beats
     @State private var minTempo: Int = AppSettings.minTempo
@@ -54,11 +55,13 @@ struct ContentView: View {
     private var  timeInt:Double  {
         return 60.0 / Double((tempo * activeSubdivision))
     }
+    @State  private var currentSoundSet: [String:AVAudioPlayer] = [:]
     
     var body: some View {
         GeometryReader { geometry in
             VStack {
                 BeatDisplay(beats: $beats, subdivisionCount: $activeSubdivision, activeSubBeat: $activeSubBeat, activeBeat: $activeBeat) .frame(height: geometry.size.height * 0.3)
+                Spacer()
                 Subdivisions(selected:$activeSubdivision)
                 Spacer()
                 HStack{
@@ -75,7 +78,7 @@ struct ContentView: View {
                             TapToMeasureBPMButton(tempo: $tempo)
                         }
                         else {
-                           Text("Shake")
+                            Text("Shake")
                         }
                     }
                 }
@@ -103,8 +106,12 @@ struct ContentView: View {
                     startMetronome(timeInt:timeInt)
                 }
             }
+            .onChange(of: selectedSound) {
+                loadSoundSet(soundSet: selectedSound)
+            }
         }.onAppear {
-            setupAudioPlayer()
+            loadSoundSet(soundSet:AppSettings.defaultSound)
+            UIApplication.shared.isIdleTimerDisabled = true // don't sleep
         }
         .onDisappear {
             stopMetronome()
@@ -120,40 +127,61 @@ struct ContentView: View {
             if activeSubBeat >= activeSubdivision {
                 activeSubBeat = 0
                 activeBeat += 1
-                tick.impactOccurred()
+               
                 if activeBeat >= beats.count {
                     activeBeat = 0
                 }
+                playSound(value: beats[activeBeat])
             }
             else {
-                tickSoft.impactOccurred()
+                playSound(value: BeatValue.subdivision)
             }
-            playSound()
+           
         }
         isPlaying = true
     }
     
     func stopMetronome() {
-        timer?.invalidate() 
+        timer?.invalidate()
         timer = nil
         isPlaying = false
     }
     
-    func setupAudioPlayer() {
-        if let soundURL = Bundle.main.url(forResource: selectedSound, withExtension: "mp3") {
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
-                audioPlayer?.prepareToPlay()
-            } catch {
-                print("Chyba při inicializaci zvukového přehrávače: \(error)")
+    func loadSoundSet(soundSet: String) {
+        for beat in BeatValue.allCases {
+            if beat != BeatValue.none {
+                let beatValue = beat.rawValue.lowercased()
+                let sourcePath = "sounds/\(soundSet)/\(beatValue)"
+                let dataAsset = NSDataAsset(name: sourcePath)
+                if let data = dataAsset?.data {
+                    do {
+                        currentSoundSet[beatValue] =  try AVAudioPlayer(data: data)
+                    } catch {
+                        print("Chyba při přehrávání zvuku: \(error.localizedDescription)")
+                    }
+                }else {
+                    print("missing data \(sourcePath)")
+                }
             }
+        }
+        print(currentSoundSet)
+    }
+    
+ 
+    func playSound(value:BeatValue) {
+    
+        DispatchQueue.global().async {
+            if value == BeatValue.high {
+               tick.impactOccurred()
+            }
+            currentSoundSet[value.rawValue.lowercased()]?.play()
         }
     }
     
-    func playSound() {
-        audioPlayer?.play() // Přehrání zvuku
-    }
 }
+
+
+
 
 #Preview {
     ContentView()
