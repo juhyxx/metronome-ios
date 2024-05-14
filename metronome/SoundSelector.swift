@@ -3,9 +3,9 @@ import SwiftUI
 // Komponenta, která umožňuje výběr jednoho ze zvuků
 struct SoundSelector: View {
     @Binding var selectedSound: String // Přijímá zvuk, který je vybrán
-
+    
     let sounds = AppSettings.sounds
-
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0)  {
@@ -31,7 +31,7 @@ struct SoundSelector: View {
                 }
             }
         }
-       
+        
     }
 }
 
