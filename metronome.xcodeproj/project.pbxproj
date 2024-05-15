@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6054BE742BE297D20062FD33 /* SoundSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054BE732BE297D20062FD33 /* SoundSelector.swift */; };
 		6054BE762BE29E5C0062FD33 /* Beat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054BE752BE29E5C0062FD33 /* Beat.swift */; };
 		6054BE782BE29F500062FD33 /* BeatDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054BE772BE29F500062FD33 /* BeatDisplay.swift */; };
 		6054BE7A2BE2A5FD0062FD33 /* TempoSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054BE792BE2A5FD0062FD33 /* TempoSelector.swift */; };
@@ -19,8 +18,6 @@
 		6058ED762BB1D70B00E31B41 /* metronomeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058ED752BB1D70B00E31B41 /* metronomeUITests.swift */; };
 		6058ED782BB1D70B00E31B41 /* metronomeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058ED772BB1D70B00E31B41 /* metronomeUITestsLaunchTests.swift */; };
 		60615D082BE3C23100710602 /* TapToMeasureBPMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60615D072BE3C23100710602 /* TapToMeasureBPMButton.swift */; };
-		60B528242BE8B5540021A8F9 /* TempoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B528232BE8B5540021A8F9 /* TempoLabel.swift */; };
-		60DDB50C2BC3DE410050DA3E /* Subdivisions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DDB50B2BC3DE410050DA3E /* Subdivisions.swift */; };
 		60DDB50E2BC3DEF50050DA3E /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 60DDB50D2BC3DEF50050DA3E /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +39,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6054BE732BE297D20062FD33 /* SoundSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSelector.swift; sourceTree = "<group>"; };
 		6054BE752BE29E5C0062FD33 /* Beat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beat.swift; sourceTree = "<group>"; };
 		6054BE772BE29F500062FD33 /* BeatDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatDisplay.swift; sourceTree = "<group>"; };
 		6054BE792BE2A5FD0062FD33 /* TempoSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoSelector.swift; sourceTree = "<group>"; };
@@ -57,8 +53,6 @@
 		6058ED752BB1D70B00E31B41 /* metronomeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = metronomeUITests.swift; sourceTree = "<group>"; };
 		6058ED772BB1D70B00E31B41 /* metronomeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = metronomeUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		60615D072BE3C23100710602 /* TapToMeasureBPMButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapToMeasureBPMButton.swift; sourceTree = "<group>"; };
-		60B528232BE8B5540021A8F9 /* TempoLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoLabel.swift; sourceTree = "<group>"; };
-		60DDB50B2BC3DE410050DA3E /* Subdivisions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subdivisions.swift; sourceTree = "<group>"; };
 		60DDB50D2BC3DEF50050DA3E /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,18 +104,15 @@
 		6058ED592BB1D70A00E31B41 /* metronome */ = {
 			isa = PBXGroup;
 			children = (
-				60DDB50B2BC3DE410050DA3E /* Subdivisions.swift */,
 				6058ED5A2BB1D70A00E31B41 /* metronomeApp.swift */,
 				6058ED5C2BB1D70A00E31B41 /* ContentView.swift */,
 				6058ED5E2BB1D70B00E31B41 /* Assets.xcassets */,
 				6058ED602BB1D70B00E31B41 /* Preview Content */,
 				60DDB50D2BC3DEF50050DA3E /* Localizable.xcstrings */,
-				6054BE732BE297D20062FD33 /* SoundSelector.swift */,
 				6054BE752BE29E5C0062FD33 /* Beat.swift */,
 				6054BE772BE29F500062FD33 /* BeatDisplay.swift */,
 				6054BE792BE2A5FD0062FD33 /* TempoSelector.swift */,
 				60615D072BE3C23100710602 /* TapToMeasureBPMButton.swift */,
-				60B528232BE8B5540021A8F9 /* TempoLabel.swift */,
 			);
 			path = metronome;
 			sourceTree = "<group>";
@@ -283,15 +274,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60DDB50C2BC3DE410050DA3E /* Subdivisions.swift in Sources */,
 				6054BE7A2BE2A5FD0062FD33 /* TempoSelector.swift in Sources */,
 				6058ED5D2BB1D70A00E31B41 /* ContentView.swift in Sources */,
-				6054BE742BE297D20062FD33 /* SoundSelector.swift in Sources */,
 				6058ED5B2BB1D70A00E31B41 /* metronomeApp.swift in Sources */,
 				6054BE762BE29E5C0062FD33 /* Beat.swift in Sources */,
 				60615D082BE3C23100710602 /* TapToMeasureBPMButton.swift in Sources */,
 				6054BE782BE29F500062FD33 /* BeatDisplay.swift in Sources */,
-				60B528242BE8B5540021A8F9 /* TempoLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -32,6 +32,19 @@ struct AppSettings {
     }
 }
 
+struct TempoName {
+    var value: Int
+    var name: String
+}
+
+let tempoNames: [TempoName] = [
+    TempoName(value: 60, name: "Largo"),
+    TempoName(value: 66, name: "Larghetto"),
+    TempoName(value: 76, name: "Adagio"),
+    TempoName(value: 108, name: "Andante"),
+    TempoName(value: 120, name: "Moderato"),
+    TempoName(value: 168, name: "Allegro")
+]
 
 struct ContentView: View {
     @State private var activeSubdivision:  Int = 1
@@ -46,23 +59,39 @@ struct ContentView: View {
     @State private var minTempo: Int = AppSettings.minTempo
     @State private var maxTempo: Int = AppSettings.maxTempo
     
-    @State private var timer: Timer?
+    let timer = DispatchSource.makeTimerSource()
     @State private var audioPlayer: AVAudioPlayer?
     
     private let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
     private let tick = UIImpactFeedbackGenerator(style: .heavy)
     private let tickSoft = UIImpactFeedbackGenerator(style: .soft)
-    private var  timeInt:Double  {
+    private var timeInterval:Double  {
         return 60.0 / Double((tempo * activeSubdivision))
     }
-    @State  private var currentSoundSet: [String:AVAudioPlayer] = [:]
+    @State private var currentSoundSet: [String:AVAudioPlayer] = [:]
+    
     
     var body: some View {
         GeometryReader { geometry in
             VStack {
                 BeatDisplay(beats: $beats, subdivisionCount: $activeSubdivision, activeSubBeat: $activeSubBeat, activeBeat: $activeBeat) .frame(height: geometry.size.height * 0.3)
                 Spacer()
-                Subdivisions(selected:$activeSubdivision)
+                HStack {
+                    Text("SUBDIVS").textScale(Text.Scale.secondary)
+                    Spacer()
+                    ForEach(2...AppSettings.subdivisionMax, id: \.self) { index in
+                       Toggle(isOn: Binding(
+                           get: { activeSubdivision == index },
+                           set: { newValue in
+                               activeSubdivision = newValue ? index : 1
+                           }
+                       )) {
+                           Text("\(index)")
+                       }
+                       .toggleStyle(.button)
+                       .padding(0)
+                   }
+                }
                 Spacer()
                 HStack{
                     VStack {
@@ -73,7 +102,8 @@ struct ContentView: View {
                         }.pickerStyle(WheelPickerStyle()).frame(width: 110)
                     }
                     VStack{
-                        TempoLabel(tempo: $tempo)
+
+                        Text("\(tempoToName(tempo: tempo))")
                         if (!CMMotionManager().isAccelerometerAvailable) {
                             TapToMeasureBPMButton(tempo: $tempo)
                         }
@@ -83,12 +113,35 @@ struct ContentView: View {
                     }
                 }
                 Spacer()
-                SoundSelector(selectedSound: $selectedSound)
+                VStack(spacing: 0) {
+                    HStack(spacing: 0)  {
+                        ForEach(AppSettings.sounds.indices, id: \.self) { index in
+                            Toggle(
+                                isOn: Binding(
+                                    get: { selectedSound == AppSettings.sounds[index] },
+                                    set: { newValue in
+                                        if newValue {
+                                            selectedSound = AppSettings.sounds[index]
+                                        }
+                                    }
+                                )
+                            ) {
+                                Text(LocalizedStringKey("sound-"+AppSettings.sounds[index]))
+                            }
+                            .toggleStyle(.button)
+                            
+                            .padding(0)
+                            if index < AppSettings.sounds.count - 1  {
+                                Spacer()
+                            }
+                        }
+                    }
+                }
                 Button(isPlaying ? "stop":  "play", systemImage: isPlaying ? "stop.circle":  "play.circle") {
                     if isPlaying {
                         stopMetronome()
                     } else {
-                        startMetronome(timeInt:timeInt)
+                        startMetronome()
                     }
                     impactGenerator.impactOccurred()
                 }.controlSize(.large).buttonStyle(.borderedProminent)
@@ -97,13 +150,13 @@ struct ContentView: View {
             .onChange(of: activeSubdivision) {
                 if isPlaying {
                     stopMetronome()
-                    startMetronome(timeInt:timeInt)
+                    startMetronome()
                 }
             }
             .onChange(of: tempo) {
                 if isPlaying {
                     stopMetronome()
-                    startMetronome(timeInt:timeInt)
+                    startMetronome()
                 }
             }
             .onChange(of: selectedSound) {
@@ -117,34 +170,58 @@ struct ContentView: View {
             stopMetronome()
         }
     }
+  
     
-    func startMetronome(timeInt:Double) {
-        timer = Timer.scheduledTimer(
-            withTimeInterval: timeInt,
-            repeats: true
-        ) { _ in
-            activeSubBeat += 1
-            if activeSubBeat >= activeSubdivision {
-                activeSubBeat = 0
-                activeBeat += 1
-               
-                if activeBeat >= beats.count {
-                    activeBeat = 0
+    func startMetronome() {
+        var prevTime:Date = Date.now
+
+        timer.schedule(deadline: .now(), repeating: timeInterval)
+        timer.setEventHandler {
+            print("\((timeInterval - (Date.now.timeIntervalSince1970 - prevTime.timeIntervalSince1970))*1000)ms \(timeInterval * 1000)ms")
+            prevTime = Date.now
+            var beatToPlay = BeatValue.subdivision
+            var asb = activeSubBeat
+            var ab = activeBeat
+            
+            asb += 1
+            if asb >= activeSubdivision {
+                asb = 0
+                ab += 1
+                if ab >= beats.count {
+                    ab = 0
                 }
-                playSound(value: beats[activeBeat])
+                beatToPlay = beats[ab]
             }
-            else {
-                playSound(value: BeatValue.subdivision)
+          
+            if beatToPlay == BeatValue.high {
+               tick.impactOccurred()
             }
-           
+            //currentSoundSet[beatToPlay.rawValue.lowercased()]?.play()
+            activeSubBeat = asb
+            activeBeat = ab
         }
+        timer.resume()
         isPlaying = true
     }
     
     func stopMetronome() {
-        timer?.invalidate()
-        timer = nil
+        timer.suspend()
         isPlaying = false
+    }
+    
+    func tempoToName(tempo: Int) -> String {
+        if tempo < 66 {
+            return "Largo"
+        } else if tempo >= 168 {
+            return "Presto"
+        } else {
+            // Najděte odpovídající jméno v seznamu
+            if let match = tempoNames.last(where: { tempo >= $0.value }) {
+                return match.name
+            }
+        }
+
+        return ""
     }
     
     func loadSoundSet(soundSet: String) {
@@ -164,23 +241,8 @@ struct ContentView: View {
                 }
             }
         }
-        print(currentSoundSet)
     }
-    
- 
-    func playSound(value:BeatValue) {
-    
-        DispatchQueue.global().async {
-            if value == BeatValue.high {
-               tick.impactOccurred()
-            }
-            currentSoundSet[value.rawValue.lowercased()]?.play()
-        }
-    }
-    
 }
-
-
 
 
 #Preview {
