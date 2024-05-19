@@ -86,9 +86,6 @@
         }
       }
     },
-    "Shake" : {
-
-    },
     "sound-beep" : {
       "extractionState" : "manual",
       "localizations" : {

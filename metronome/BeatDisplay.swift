@@ -1,22 +1,19 @@
 import SwiftUI
 
 struct BeatDisplay: View {
-    @Binding var beats: [BeatValue]
-    @Binding var subdivisionCount: Int
-    @Binding var activeSubBeat: Int
-    @Binding var activeBeat: Int
+    @StateObject var model = MetronomeModel()
     
     
     var body: some View {
         VStack{
             HStack(spacing: AppSettings.spacing) {
-                ForEach(beats.indices, id: \.self) { index in
+                ForEach(model.beats.indices, id: \.self) { index in
                     Beat(
-                        value: $beats[index],
-                        subdivisionCount: $subdivisionCount,
-                        activeSubBeat: $activeSubBeat,
+                        value: $model.beats[index],
+                        subdivisionCount: $model.activeSubdivision,
+                        activeSubBeat: $model.activeSubBeat,
                         isActive: Binding(
-                            get: { activeBeat == index },
+                            get: { model.activeBeat == index },
                             set: { _ in }
                         ),
                         index: index
@@ -24,18 +21,18 @@ struct BeatDisplay: View {
                 }
             }
             HStack {
-                Text("\(activeBeat + 1):\(activeSubBeat + 1)")
+                Text("\(model.activeBeat + 1):\(model.activeSubBeat + 1)")
                 Spacer()
                 Button("add",systemImage: "plus.circle", action: {
-                    if beats.count < 9 {
-                        beats.append(BeatValue.low)
+                    if model.beats.count < 9 {
+                        model.beats.append(BeatValue.low)
                     }
-                }).disabled($beats.count >= 9)
+                }).disabled($model.beats.count >= 9)
                 Button("remove",systemImage: "minus.circle", action: {
-                    if beats.count > 1 {
-                        beats.removeLast()
+                    if model.beats.count > 1 {
+                        model.beats.removeLast()
                     }
-                }).disabled($beats.count <= 1)
+                }).disabled($model.beats.count <= 1)
             }
         }
     }
@@ -47,10 +44,5 @@ struct BeatDisplay: View {
     @State var activeSubBeat = 1
     @State var activeBeat = 4
     
-    return BeatDisplay(
-        beats: $beats,
-        subdivisionCount: $subdivisionCount,
-        activeSubBeat: $activeSubBeat,
-        activeBeat: $activeBeat
-    )
+    return BeatDisplay()
 }
