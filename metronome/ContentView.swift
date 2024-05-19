@@ -9,29 +9,6 @@ import SwiftUI
 import AVFoundation
 import CoreMotion
 
-enum BeatValue: String, CaseIterable, Hashable {
-    case high = "HIGH"
-    case medium = "MEDIUM"
-    case low = "LOW"
-    case none = "NONE"
-    case subdivision = "SUBDIVISION"
-}
-
-struct AppSettings {
-    static let subdivisionMax: Int = 6
-    static let minTempo: Int = 40
-    static let maxTempo: Int = 300
-    static let sounds:[String] = ["sticks", "drums", "classic", "beep"]
-    static let spacing: CGFloat = 2
-    static let defaultSound: String = AppSettings.sounds[0]
-    
-    struct Defaults {
-        static let sound: String = "sticks"
-        static let tempo: Int = 120
-        static let beats: [BeatValue] = [BeatValue.high, BeatValue.low, BeatValue.medium, BeatValue.low]
-    }
-}
-
 struct TempoName {
     var value: Int
     var name: String
@@ -50,26 +27,22 @@ struct ContentView: View {
     @State private var activeSubdivision:  Int = 1
     @State private var activeBeat: Int = 0
     @State private var activeSubBeat:  Int = 0
-    
     @State private var tempo: Int =  AppSettings.Defaults.tempo
     @State private var isPlaying: Bool = false
-    
     @State private var selectedSound: String = AppSettings.Defaults.sound
     @State private var beats: [BeatValue] = AppSettings.Defaults.beats
     @State private var minTempo: Int = AppSettings.minTempo
     @State private var maxTempo: Int = AppSettings.maxTempo
-    
-    let timer = DispatchSource.makeTimerSource()
     @State private var audioPlayer: AVAudioPlayer?
     
     private let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
     private let tick = UIImpactFeedbackGenerator(style: .heavy)
     private let tickSoft = UIImpactFeedbackGenerator(style: .soft)
-    private var timeInterval:Double  {
-        return 60.0 / Double((tempo * activeSubdivision))
-    }
+    private var timeInterval:Double  {return 60.0 / Double((tempo * activeSubdivision))}
     @State private var currentSoundSet: [String:AVAudioPlayer] = [:]
-    
+    private var taskIdentifier: DispatchWorkItem? = nil
+    @State private var worker:DispatchWorkItem? = nil
+    let queue = DispatchQueue(label: "metroQueue", qos: .userInteractive)
     
     var body: some View {
         GeometryReader { geometry in
@@ -80,17 +53,17 @@ struct ContentView: View {
                     Text("SUBDIVS").textScale(Text.Scale.secondary)
                     Spacer()
                     ForEach(2...AppSettings.subdivisionMax, id: \.self) { index in
-                       Toggle(isOn: Binding(
-                           get: { activeSubdivision == index },
-                           set: { newValue in
-                               activeSubdivision = newValue ? index : 1
-                           }
-                       )) {
-                           Text("\(index)")
-                       }
-                       .toggleStyle(.button)
-                       .padding(0)
-                   }
+                        Toggle(isOn: Binding(
+                            get: { activeSubdivision == index },
+                            set: { newValue in
+                                activeSubdivision = newValue ? index : 1
+                            }
+                        )) {
+                            Text("\(index)")
+                        }
+                        .toggleStyle(.button)
+                        .padding(0)
+                    }
                 }
                 Spacer()
                 HStack{
@@ -102,7 +75,7 @@ struct ContentView: View {
                         }.pickerStyle(WheelPickerStyle()).frame(width: 110)
                     }
                     VStack{
-
+                        
                         Text("\(tempoToName(tempo: tempo))")
                         if (!CMMotionManager().isAccelerometerAvailable) {
                             TapToMeasureBPMButton(tempo: $tempo)
@@ -147,18 +120,6 @@ struct ContentView: View {
                 }.controlSize(.large).buttonStyle(.borderedProminent)
             }
             .padding(5)
-            .onChange(of: activeSubdivision) {
-                if isPlaying {
-                    stopMetronome()
-                    startMetronome()
-                }
-            }
-            .onChange(of: tempo) {
-                if isPlaying {
-                    stopMetronome()
-                    startMetronome()
-                }
-            }
             .onChange(of: selectedSound) {
                 loadSoundSet(soundSet: selectedSound)
             }
@@ -170,15 +131,16 @@ struct ContentView: View {
             stopMetronome()
         }
     }
-  
+    
     
     func startMetronome() {
-        var prevTime:Date = Date.now
-
-        timer.schedule(deadline: .now(), repeating: timeInterval)
-        timer.setEventHandler {
-            print("\((timeInterval - (Date.now.timeIntervalSince1970 - prevTime.timeIntervalSince1970))*1000)ms \(timeInterval * 1000)ms")
-            prevTime = Date.now
+        isPlaying = true
+        playBeat(at: DispatchTime.now())
+    }
+    
+    func playBeat(at: DispatchTime) {
+        worker = DispatchWorkItem(block: {
+            
             var beatToPlay = BeatValue.subdivision
             var asb = activeSubBeat
             var ab = activeBeat
@@ -192,21 +154,27 @@ struct ContentView: View {
                 }
                 beatToPlay = beats[ab]
             }
-          
+            
             if beatToPlay == BeatValue.high {
-               tick.impactOccurred()
+                tick.impactOccurred()
             }
-            //currentSoundSet[beatToPlay.rawValue.lowercased()]?.play()
+            
+            let sound = currentSoundSet[beatToPlay.rawValue.lowercased()]
+            sound?.play()
             activeSubBeat = asb
             activeBeat = ab
-        }
-        timer.resume()
-        isPlaying = true
+            if isPlaying {
+                playBeat(at: at + timeInterval)
+            }
+        })
+        queue.asyncAfter(deadline: at, execute: worker!)
     }
     
     func stopMetronome() {
-        timer.suspend()
+        worker?.cancel()
         isPlaying = false
+        activeSubBeat = 0
+        activeBeat = 0
     }
     
     func tempoToName(tempo: Int) -> String {
@@ -215,12 +183,10 @@ struct ContentView: View {
         } else if tempo >= 168 {
             return "Presto"
         } else {
-            // Najděte odpovídající jméno v seznamu
             if let match = tempoNames.last(where: { tempo >= $0.value }) {
                 return match.name
             }
         }
-
         return ""
     }
     

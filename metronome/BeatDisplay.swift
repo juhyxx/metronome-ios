@@ -5,7 +5,7 @@ struct BeatDisplay: View {
     @Binding var subdivisionCount: Int
     @Binding var activeSubBeat: Int
     @Binding var activeBeat: Int
-
+    
     
     var body: some View {
         VStack{
@@ -15,7 +15,10 @@ struct BeatDisplay: View {
                         value: $beats[index],
                         subdivisionCount: $subdivisionCount,
                         activeSubBeat: $activeSubBeat,
-                        activeBeat: $activeBeat,
+                        isActive: Binding(
+                            get: { activeBeat == index },
+                            set: { _ in }
+                        ),
                         index: index
                     )
                 }
@@ -32,7 +35,7 @@ struct BeatDisplay: View {
                     if beats.count > 1 {
                         beats.removeLast()
                     }
-                }).disabled($beats.count == 1)
+                }).disabled($beats.count <= 1)
             }
         }
     }
@@ -40,14 +43,14 @@ struct BeatDisplay: View {
 
 #Preview {
     @State var beats = [BeatValue.low, BeatValue.high, BeatValue.medium, BeatValue.none]
-      @State var subdivisionCount = 3
-      @State var activeSubBeat = 1
-      @State var activeBeat = 4
-
-      return BeatDisplay(
-          beats: $beats,
-          subdivisionCount: $subdivisionCount,
-          activeSubBeat: $activeSubBeat,
-          activeBeat: $activeBeat
-      )
+    @State var subdivisionCount = 3
+    @State var activeSubBeat = 1
+    @State var activeBeat = 4
+    
+    return BeatDisplay(
+        beats: $beats,
+        subdivisionCount: $subdivisionCount,
+        activeSubBeat: $activeSubBeat,
+        activeBeat: $activeBeat
+    )
 }
