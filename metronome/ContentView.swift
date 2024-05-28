@@ -97,7 +97,6 @@ struct ContentView: View {
                 model.loadSoundSet(soundSet: model.selectedSound)
             }
         }.onAppear {
-            model.loadSoundSet(soundSet:AppSettings.defaultSound)
             UIApplication.shared.isIdleTimerDisabled = true // don't sleep
         }
         .onDisappear {

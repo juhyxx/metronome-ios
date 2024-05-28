@@ -1,12 +1,5 @@
 import SwiftUI
 
-enum BeatValue: String, CaseIterable, Hashable {
-    case high = "HIGH"
-    case medium = "MEDIUM"
-    case low = "LOW"
-    case none = "NONE"
-    case subdivision = "SUBDIVISION"
-}
 
 struct Beat: View {
     @Binding var value: BeatValue

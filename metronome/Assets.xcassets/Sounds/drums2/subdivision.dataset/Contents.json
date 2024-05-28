@@ -1,9 +1,9 @@
 {
   "data" : [
     {
-      "filename" : "subdiv.mp3",
+      "filename" : "subdivision.wav",
       "idiom" : "universal",
-      "universal-type-identifier" : "public.mp3"
+      "universal-type-identifier" : "com.microsoft.waveform-audio"
     }
   ],
   "info" : {

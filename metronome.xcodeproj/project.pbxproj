@@ -14,7 +14,6 @@
 		6058ED5B2BB1D70A00E31B41 /* metronomeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058ED5A2BB1D70A00E31B41 /* metronomeApp.swift */; };
 		6058ED5D2BB1D70A00E31B41 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058ED5C2BB1D70A00E31B41 /* ContentView.swift */; };
 		6058ED5F2BB1D70B00E31B41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6058ED5E2BB1D70B00E31B41 /* Assets.xcassets */; };
-		6058ED622BB1D70B00E31B41 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6058ED612BB1D70B00E31B41 /* Preview Assets.xcassets */; };
 		6058ED6C2BB1D70B00E31B41 /* metronomeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058ED6B2BB1D70B00E31B41 /* metronomeTests.swift */; };
 		6058ED762BB1D70B00E31B41 /* metronomeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058ED752BB1D70B00E31B41 /* metronomeUITests.swift */; };
 		6058ED782BB1D70B00E31B41 /* metronomeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058ED772BB1D70B00E31B41 /* metronomeUITestsLaunchTests.swift */; };
@@ -48,7 +47,6 @@
 		6058ED5A2BB1D70A00E31B41 /* metronomeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = metronomeApp.swift; sourceTree = "<group>"; };
 		6058ED5C2BB1D70A00E31B41 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6058ED5E2BB1D70B00E31B41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6058ED612BB1D70B00E31B41 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6058ED672BB1D70B00E31B41 /* metronomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = metronomeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6058ED6B2BB1D70B00E31B41 /* metronomeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = metronomeTests.swift; sourceTree = "<group>"; };
 		6058ED712BB1D70B00E31B41 /* metronomeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = metronomeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,7 +107,6 @@
 				6058ED5A2BB1D70A00E31B41 /* metronomeApp.swift */,
 				6058ED5C2BB1D70A00E31B41 /* ContentView.swift */,
 				6058ED5E2BB1D70B00E31B41 /* Assets.xcassets */,
-				6058ED602BB1D70B00E31B41 /* Preview Content */,
 				60DDB50D2BC3DEF50050DA3E /* Localizable.xcstrings */,
 				6054BE752BE29E5C0062FD33 /* Beat.swift */,
 				6054BE772BE29F500062FD33 /* BeatDisplay.swift */,
@@ -118,14 +115,6 @@
 				6025AE392BFA6DD0000B1C34 /* MetronomeModel.swift */,
 			);
 			path = metronome;
-			sourceTree = "<group>";
-		};
-		6058ED602BB1D70B00E31B41 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				6058ED612BB1D70B00E31B41 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		6058ED6A2BB1D70B00E31B41 /* metronomeTests */ = {
@@ -250,7 +239,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6058ED622BB1D70B00E31B41 /* Preview Assets.xcassets in Resources */,
 				6058ED5F2BB1D70B00E31B41 /* Assets.xcassets in Resources */,
 				60DDB50E2BC3DEF50050DA3E /* Localizable.xcstrings in Resources */,
 			);
