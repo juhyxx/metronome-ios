@@ -33,21 +33,31 @@ class MetronomeModel: ObservableObject {
     
     private var audioEngine: AVAudioEngine = AVAudioEngine()
     private var audioPlayerNode: AVAudioPlayerNode = AVAudioPlayerNode()
-    let audioFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32,  sampleRate: Double(48000), channels: 2,  interleaved: false)!
+    let audioFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32,  sampleRate: Double(48000), channels: 2,  interleaved: true)!
     
     init() {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+
+            try AVAudioSession.sharedInstance().setActive(true)
+      
+
             }
             catch {
-                // report for an error
                 print(error)
-            }
+                
+        }
         
         audioEngine.attach(audioPlayerNode)
         audioEngine.connect(audioPlayerNode, to: audioEngine.mainMixerNode, format:audioFormat)
+        
+        do {
+            try audioEngine.start()
+        } catch {
+            print("Error starting audio engine: \(error)")
+        }
+        audioPlayerNode.play()
         loadSoundSet(soundSet:AppSettings.defaultSound)
-     
     }
     
     func start() {
@@ -59,12 +69,8 @@ class MetronomeModel: ObservableObject {
             print("Error starting audio engine: \(error)")
         }
         audioPlayerNode.play()
-
-        
-        
         isPlaying = true
         scheduleNextBeat()
-        
     }
     
     func stop() {
@@ -80,7 +86,9 @@ class MetronomeModel: ObservableObject {
     private func scheduleNextBeat() {
         let durationInNanoseconds:UInt64 =  UInt64(duration * Double(NSEC_PER_SEC) / 40)
         let hostTime = AVAudioTime(hostTime: (mach_absolute_time() + durationInNanoseconds))
-        let beatToPlay = getNextBeat()
+        var subBeat =  self.activeSubBeat
+        var beat =  self.activeBeat
+        var beatToPlay = self.beats[beat]
         
        
         guard let audioBuffer = currentSoundSet[beatToPlay.rawValue.lowercased()] else {
@@ -93,6 +101,26 @@ class MetronomeModel: ObservableObject {
         audioPlayerNode.scheduleBuffer(audioBuffer, at: hostTime, options: .interrupts, completionHandler: {
             print("sound completed")
             if (self.isPlaying) {
+               // var beatToPlay = BeatValue.subdivision
+                var subBeat =  self.activeSubBeat
+                var beat =  self.activeBeat
+
+                subBeat += 1
+                if  subBeat >= self.activeSubdivision {
+                    subBeat = 0
+                    beat += 1
+                    if beat >= self.beats.count {
+                        beat = 0
+                    }
+                    beatToPlay = self.beats[beat]
+                }
+                
+
+                DispatchQueue.main.async {
+                    self.activeSubBeat = subBeat
+                    self.activeBeat = beat
+                }
+                
                 self.scheduleNextBeat()
             }
         })
@@ -122,6 +150,11 @@ class MetronomeModel: ObservableObject {
         return beatToPlay
     }
     
+    func loadAudio(soundSet:String, beatValue:BeatValue) {
+        
+        
+    }
+    
 
 
     func loadSoundSet(soundSet: String) {
@@ -135,6 +168,7 @@ class MetronomeModel: ObservableObject {
                     print("Asset not found: \(assetName)")
                     continue
                 }
+                
               
                 let audioData = asset.data
                 let frameCount = AVAudioFrameCount(audioData.count) / audioFormat.streamDescription.pointee.mBytesPerFrame
@@ -150,8 +184,10 @@ class MetronomeModel: ObservableObject {
                 soundSetData[beatValue] = buffer
             }
             
-          
         }
+        
+        audioPlayerNode.scheduleBuffer( soundSetData["high"]!)
+       
         print("Loaded \(soundSetData)")
         DispatchQueue.main.async {
             self.currentSoundSet = soundSetData

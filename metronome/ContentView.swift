@@ -22,7 +22,7 @@ let tempoNames: [TempoName] = [
 ]
 
 struct ContentView: View {
-    @StateObject private var model = MetronomeModel()
+    @StateObject var model = MetronomeModel()
 
     var body: some View {
         GeometryReader { geometry in
